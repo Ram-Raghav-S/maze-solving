@@ -264,17 +264,17 @@ public class MazeRunner extends RobotSE{
 	}
 		
 		
-    /**
-     * finds whether it would be best to turn left or turn right to face a particular direction
-     * @param direction the direction to face
-     * @return -1 if turn left would be optimal. +1 if turn right would be optimal or in the case where direction of turn is arbitrary
-     */
+	/**
+	* finds whether it would be best to turn left or turn right to face a particular direction
+	* @param direction the direction to face
+	* @return -1 if turn left would be optimal. +1 if turn right would be optimal or in the case where direction of turn is arbitrary
+	*/
 	public int sideToTurn(Direction direction) { 
 		if(getDirection().left() == direction) 
 			return -1; 
 		return 1; // case of right or no preference
-
 	}
+	
 		
         /**
          * 
