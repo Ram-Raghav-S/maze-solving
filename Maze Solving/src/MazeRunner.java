@@ -282,28 +282,28 @@ public class MazeRunner extends RobotSE{
          * @param endAvenue Avenue of exit 
          * @param showSolution Whether to put a line of things to show solution  
          */
-		public void solveMaze(int endStreet, int endAvenue, boolean showSolution) {
-			moves = 0;
-			turns = 0; 
-			while(getStreet() != endStreet || getAvenue() != endAvenue) {   
-				decideDirectionOrGoBackToLastIntersection();
+	public void solveMaze(int endStreet, int endAvenue, boolean showSolution) {
+		moves = 0;
+		turns = 0; 
+		while(getStreet() != endStreet || getAvenue() != endAvenue) {   
+			decideDirectionOrGoBackToLastIntersection();
 
-				if (!isAtDeadEnd) {
-					moveAndLog();
-					if (isAtFork) { 
-						logCell();
-						isAtFork = false; 
-					}
-				} else { // is at dead end
-					goBackToLastIntersection();
-					isAtDeadEnd = false;
+			if (!isAtDeadEnd) {
+				moveAndLog();
+				if (isAtFork) { 
+					logCell();
+					isAtFork = false; 
 				}
+			} else { // is at dead end
+				goBackToLastIntersection();
+				isAtDeadEnd = false;
 			}
-			
-			System.out.printf("Solved the maze in %d moves and %d turns", moves, turns);
-			
-			if(showSolution) 
-				markSolution();
+		}
+
+		System.out.printf("Solved the maze in %d moves and %d turns", moves, turns);
+
+		if(showSolution) 
+			markSolution();
 	}	
 
 }
