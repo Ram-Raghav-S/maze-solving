@@ -211,70 +211,70 @@ public class MazeRunner extends RobotSE{
 	}
 
 		
-		public void moveLogAndPutThing() {
-			moveAndLog();
+	public void moveLogAndPutThing() {
+		moveAndLog();
+		putThing();
+	}
+
+	public void turn180L() {
+		turnLeft();
+		turnLeft();
+	}
+
+	public void turn180R() {
+		turnRight();
+		turnRight();
+	}
+
+	public void moveBack() {
+		turn180L();
+		move();
+		turn180L();
+	}
+		
+	public void markSolution() {
+		turn180L();
+		String command;
+		for(int i = allPathList.size()-1; i >=0 ; i--) {
+			if(directionsAtForks.containsKey(getIntersection())) {
+				Direction directionAtIntersection = directionsAtForks.get(getIntersection()).opposite();
+				while(getDirection() != directionAtIntersection) {
+					if(sideToTurn(directionAtIntersection) == 1)
+						turnRight();
+					else
+						turnLeft();
+				}
+			}	
+			for(int j = allPathList.get(i).size()-1; j >=0 ; j--) {
+
+				command = allPathList.get(i).get(j);
+				if (command.equals("move")) {
+					putThing();
+					move();
+				}
+				else if(command.equals("turn left")) 
+					turnRight();
+				else if(command.equals("turn right")) 
+					turnLeft();	
+
+			}
 			putThing();
 		}
 
-		public void turn180L() {
-			turnLeft();
-			turnLeft();
-		}
-		
-		public void turn180R() {
-			turnRight();
-			turnRight();
-		}
-		
-		public void moveBack() {
-			turn180L();
-			move();
-			turn180L();
-		}
-		
-		public void markSolution() {
-			turn180L();
-			String command;
-			for(int i = allPathList.size()-1; i >=0 ; i--) {
-				if(directionsAtForks.containsKey(getIntersection())) {
-					Direction directionAtIntersection = directionsAtForks.get(getIntersection()).opposite();
-					while(getDirection() != directionAtIntersection) {
-						if(sideToTurn(directionAtIntersection) == 1)
-							turnRight();
-						else
-							turnLeft();
-					}
-				}	
-				for(int j = allPathList.get(i).size()-1; j >=0 ; j--) {
-					
-					command = allPathList.get(i).get(j);
-					if (command.equals("move")) {
-						putThing();
-						move();
-					}
-					else if(command.equals("turn left")) 
-						turnRight();
-					else if(command.equals("turn right")) 
-						turnLeft();	
-					
-				}
-				putThing();
-			}
-			
-		}
+	}
 		
 		
-	    /**
-	     * finds whether it would be best to turn left or turn right to face a particular direction
-	     * @param direction the direction to face
-	     * @return -1 if turn left would be optimal. +1 if turn right would be optimal or in the case where direction of turn is arbitrary
-	     */
-		public int sideToTurn(Direction direction) { 
-			if(getDirection().left() == direction) 
-				return -1; 
-			return 1; // case of right or no preference
-			
-		}
+    /**
+     * finds whether it would be best to turn left or turn right to face a particular direction
+     * @param direction the direction to face
+     * @return -1 if turn left would be optimal. +1 if turn right would be optimal or in the case where direction of turn is arbitrary
+     */
+	public int sideToTurn(Direction direction) { 
+		if(getDirection().left() == direction) 
+			return -1; 
+		return 1; // case of right or no preference
+
+	}
 		
         /**
          * 
@@ -283,6 +283,8 @@ public class MazeRunner extends RobotSE{
          * @param showSolution Whether to put a line of things to show solution  
          */
 		public void solveMaze(int endStreet, int endAvenue, boolean showSolution) {
+			moves = 0;
+			turns = 0; 
 			while(getStreet() != endStreet || getAvenue() != endAvenue) {   
 				decideDirectionOrGoBackToLastIntersection();
 
@@ -297,6 +299,8 @@ public class MazeRunner extends RobotSE{
 					isAtDeadEnd = false;
 				}
 			}
+			
+			System.out.printf("Solved the maze in %d moves and %d turns", moves, turns);
 			
 			if(showSolution) 
 				markSolution();
