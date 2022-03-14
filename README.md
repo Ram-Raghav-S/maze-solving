@@ -1,2 +1,4 @@
 # Maze-Solving
-Solving a perfect maze using the Trémaux's algorithm
+Using the Trémaux's algorithm to solve a rodomly generated maze
+
+
